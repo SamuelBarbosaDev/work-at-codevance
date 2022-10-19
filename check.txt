@@ -1,0 +1,10 @@
+Tecnologia utilizadas:
+1 - herok
+2 - celery
+3 - django rest framework
+4 - postgres
+5 - JWT
+6 - python
+7 - django
+
+O que deve ser feito:
