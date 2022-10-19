@@ -1,33 +1,33 @@
 # Teste Técnico
 ### Ambiente virtual e Dependências:
-- Criando ambiente virtual
+- Criando ambiente virtual:
 ```
 python -m venv venv
 ```
 
-- Entrando no ambiente virtual
+- Entrando no ambiente virtual:
 ```
 source venv/bin/activate
 ```
 
-- Entre na pasta app/
+- Entre na pasta app/:
 ```
 cd apps/
 ```
 
-- Instale as dependências
+- Instale as dependências:
 ```
 pip install -r requirements/local.txt
 ```
 
 ### Criando banco de dados PostgreSQL:
 
-- usuario postgres
+- usuario postgres:
 ```
 sudo -i -u postgres psql
 ```
 
-- Crie o banco de dados
+- Crie o banco de dados:
 ```
 CREATE DATABASE postgres;
 ```
