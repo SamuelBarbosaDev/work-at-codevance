@@ -49,15 +49,10 @@
               <li class="nav-item active">
                 <a class="nav-link" href="{% url 'home' %}">{% translate "Home" %}<span class="visually-hidden">(current)</span></a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'about' %}">{% translate "About" %}</a>
+              </li>
               {% if request.user.is_authenticated %}
-                <li class="nav-item">
-                  {# URL provided by django-allauth/account/urls.py #}
-                  <a class="nav-link" href="/historico/history/">{% translate "History" %}</a>
-                </li>
-                <li class="nav-item">
-                  {# URL provided by django-allauth/account/urls.py #}
-                  <a class="nav-link" href="/historico/payments/">{% translate "Payments" %}</a>
-                </li>
                 <li class="nav-item">
                   {# URL provided by django-allauth/account/urls.py #}
                   <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% translate "My Profile" %}</a>

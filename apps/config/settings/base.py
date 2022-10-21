@@ -4,7 +4,7 @@ Base settings to build other settings files upon.
 from pathlib import Path
 
 import environ
-
+BASE_DIR = Path(__file__).resolve().parent.parent
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # apps/
 APPS_DIR = ROOT_DIR / "apps"
@@ -82,6 +82,8 @@ DJANGO_APPS = [
     # "django.contrib.humanize", # Handy template tags
     "django.contrib.admin",
     "django.forms",
+    "django_cpf_cnpj",
+    "djmoney",
 ]
 THIRD_PARTY_APPS = [
     "crispy_forms",
@@ -98,6 +100,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "apps.users",
+    'core',
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -176,7 +179,7 @@ STATICFILES_FINDERS = [
 # MEDIA
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-MEDIA_ROOT = str(APPS_DIR / "media")
+MEDIA_ROOT = str(BASE_DIR / "media")
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = "/media/"
 
