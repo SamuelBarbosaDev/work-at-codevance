@@ -29,7 +29,7 @@ sudo -i -u postgres psql
 
 - Crie o banco de dados:
 ```
-CREATE DATABASE postgres;
+CREATE DATABASE db;
 ```
 - Depois, você modificará alguns dos parâmetros de conexão para o usuário que acabou de criar. Isso acelerará as operações do banco de dados para que os valores corretos não precisem ser consultados e definidos toda vez que uma conexão for estabelecida.
 
@@ -50,7 +50,7 @@ ALTER ROLE postgres SET timezone TO 'UTC';
 
 - Passo 4:
 ```
-GRANT ALL PRIVILEGES ON DATABASE myproject TO myprojectuser;
+GRANT ALL PRIVILEGES ON DATABASE db TO postgres;
 ```
 
 - Passo 5:
