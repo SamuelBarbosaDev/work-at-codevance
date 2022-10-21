@@ -19,6 +19,14 @@ class PaymentsListView(ListView):
         context = super(PaymentsListView, self).get_context_data(**kwargs)
         context.update({
         })
+        #===============Checks if the expiration date has been reached===============
+        today = datetime.date.today()
+        payments_model = Payments.objects.filter(request_status='Disponível', user=self.request.user.id)
+
+        for paymens_model in payments_model:
+            if paymens_model.expiration_date < today:
+                Payments.objects.filter(request_status='Disponível', user=self.request.user.id).update(request_status='Indisponível')
+
         return context
 
     def get_queryset(self):
