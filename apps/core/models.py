@@ -5,17 +5,17 @@ from django.contrib.auth import get_user_model
 # Create your models here.
 
 REQUESTS = (
-    ('S', 'Solicitado'),
-    ('A', 'Aprovado'),
-    ('N', 'Negado'),
+    ('Solicitado', 'Solicitado'),
+    ('Aprovado', 'Aprovado'),
+    ('Negado', 'Negado'),
 )
 
 ANTICIPATION_REQUESTS = (
-    ('I', 'Indisponível'), 
-    ('D', 'Disponível'), 
-    ('AC', 'Aguardando confirmação'), 
-    ('A', 'Antecipado'), 
-    ('N', 'Negado'),
+    ('Indisponível', 'Indisponível'), 
+    ('Disponível', 'Disponível'), 
+    ( 'Aguardando confirmação', 'Aguardando confirmação'), 
+    ('Antecipado', 'Antecipado'), 
+    ('Negado', 'Negado'),
 )
 
 class Supplier(models.Model):

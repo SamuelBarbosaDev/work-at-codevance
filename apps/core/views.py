@@ -17,12 +17,14 @@ class PaymentsListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(PaymentsListView, self).get_context_data(**kwargs)
+        today = datetime.date.today()
         context.update({
+            'today': today,
         })
         return context
 
     def get_queryset(self):
-        return Payments.objects.all().order_by('-date_of_issue')
+        return Payments.objects.all().order_by('date_of_issue')
 
 payments_list_view = PaymentsListView.as_view()
 
@@ -35,13 +37,13 @@ class HistoryListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(HistoryListView, self).get_context_data(**kwargs)
-        hoje = datetime.date.today()
+        today = datetime.date.today()
         context.update({
-            'hoje': hoje,
+            'today': today,
         })
         return context
 
     def get_queryset(self):
-        return Payments.objects.all().order_by('-date_of_issue')
+        return Payments.objects.all().order_by('date_of_issue')
 
 history_list_view = HistoryListView.as_view()

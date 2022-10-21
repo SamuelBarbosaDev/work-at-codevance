@@ -27,7 +27,7 @@
             <td>{{payment.supplier}}</td>
             <td>{{payment.original_value}}</td>
             <td>{{payment.expiration_date}}</td>
-            {% if payment.expiration_date > hoje %}
+            {% if payment.expiration_date > today %}
             <td>disponivel</td>
             {% else %}
             <td>indisponivel</td>

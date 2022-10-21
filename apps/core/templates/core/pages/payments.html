@@ -5,17 +5,55 @@
 
 {% block content %}
 <div class="container">
-    <h1>Payments</h1>
+    <h1>Payments{{today}}</h1>
 
     <div class="container" style="min-height: 700px;">
         {% for payment in payments%}
-            <div class="p-5 mb-4 bg-light rounded-3" style="background-color: gainsboro;">
-                <div class="container-fluid py-5">
-                <h1 class="display-5 fw-bold">Supplier: {{payment.supplier}}</h1>
-                <p class="col-md-8 fs-4">Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.</p>
-                <button class="btn btn-primary btn-lg" type="button">Example button</button>
+
+            {% if payment.expiration_date > today %}
+                <p>pão</p>
+            {% elif payment.request_status == "Antecipado"%}
+                <div class="p-5 mb-4 bg-light rounded-3" style="background-color: gainsboro;">
+                    <div class="container-fluid py-5">
+                    <h1 class="display-5 fw-bold">Supplier: {{payment.supplier}}</h1>
+                    <p class="col-md-8 fs-4">Expiration Date: <b>{{payment.expiration_date}}</b></p>
+                    <p class="col-md-8 fs-4">Request Status : <b>{{payment.request_status}}</b></p>
+                    <p class="col-md-8 fs-4">Original value: <b>{{payment.original_value}}</b></p>
+                    <p class="col-md-8 fs-4" style="color:green;"><b>Antecipado</b></p>
+                    </div>
                 </div>
-            </div>
+            {% elif payment.request_status == "Negado"%}
+                <div class="p-5 mb-4 bg-light rounded-3" style="background-color: gainsboro;">
+                    <div class="container-fluid py-5">
+                    <h1 class="display-5 fw-bold">Supplier: {{payment.supplier}}</h1>
+                    <p class="col-md-8 fs-4">Expiration Date: <b>{{payment.expiration_date}}</b></p>
+                    <p class="col-md-8 fs-4">Request Status : <b>{{payment.request_status}}</b></p>
+                    <p class="col-md-8 fs-4">Original value: <b>{{payment.original_value}}</b></p>
+                    <p class="col-md-8 fs-4" style="color:red;"><b>Negado</b></p>
+                    </div>
+                </div>
+            {% elif payment.request_status == "Aguardando confirmação"%}
+                <div class="p-5 mb-4 bg-light rounded-3" style="background-color: gainsboro;">
+                    <div class="container-fluid py-5">
+                    <h1 class="display-5 fw-bold">Supplier: {{payment.supplier}}</h1>
+                    <p class="col-md-8 fs-4">Expiration Date: <b>{{payment.expiration_date}}</b></p>
+                    <p class="col-md-8 fs-4">Request Status : <b>{{payment.request_status}}</b></p>
+                    <p class="col-md-8 fs-4">Original value: <b>{{payment.original_value}}</b></p>
+                    <p class="col-md-8 fs-4" style="color:yellowgreen;"><b>Aguardando confirmação</b></p>
+                    </div>
+                </div>
+            {% else %}
+                <div class="p-5 mb-4 bg-light rounded-3" style="background-color: gainsboro;">
+                    <div class="container-fluid py-5">
+                    <h1 class="display-5 fw-bold">Supplier: {{payment.supplier}}</h1>
+                    <p class="col-md-8 fs-4">Expiration Date: <b>{{payment.expiration_date}}</b></p>
+                    <p class="col-md-8 fs-4">Request Status : <b>{{payment.request_status}}</b></p>
+                    <p class="col-md-8 fs-4">Original value: <b>{{payment.original_value}}</b></p>
+                    <button class="btn btn-primary btn-lg" type="button">Solicita</button>
+                    </div>
+                </div>
+            {% endif %}
+
         {% endfor %}
     </div>
 
