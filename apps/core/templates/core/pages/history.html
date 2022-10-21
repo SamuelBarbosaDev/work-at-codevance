@@ -6,55 +6,54 @@
 {% block content %}
 <div class="container">
     <h1>History</h1>
-    <div class="row mb-3 text-center" style="background-color: gainsboro;">
-      <div class="col-sm-4 themed-grid-col">.col-sm-4</div>
-      <div class="col-sm-4 themed-grid-col">.col-sm-4</div>
-      <div class="col-sm-4 themed-grid-col">.col-sm-4</div>
+
+    <div class="container" style="min-height: 700px;">
+        <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">id</th>
+            <th scope="col">Supplier</th>
+            <th scope="col">Original Value</th>
+            <th scope="col">Expiration Date</th>
+            <th scope="col">status</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for payment in payments%}
+
+            <tr>
+            <th scope="row">{{payment.id}}</th>
+            <td>{{payment.supplier}}</td>
+            <td>{{payment.original_value}}</td>
+            <td>{{payment.expiration_date}}</td>
+            {% if payment.expiration_date > hoje %}
+            <td>disponivel</td>
+            {% else %}
+            <td>indisponivel</td>
+            {% endif%}
+            </tr>
+
+        {% endfor %}
+        </tbody>
+        </table>
     </div>
 
-    <div class="row mb-3 text-center" style="background-color: gainsboro;">
-      <div class="col-sm-4 themed-grid-col">.col-sm-4</div>
-      <div class="col-sm-4 themed-grid-col">.col-sm-4</div>
-      <div class="col-sm-4 themed-grid-col">.col-sm-4</div>
-    </div>
+    <!-- ======= PAGINATION ======= -->
 
-    <div class="row mb-3 text-center" style="background-color: gainsboro;">
-      <div class="col-sm-4 themed-grid-col">.col-sm-4</div>
-      <div class="col-sm-4 themed-grid-col">.col-sm-4</div>
-      <div class="col-sm-4 themed-grid-col">.col-sm-4</div>
-    </div>
+    <nav aria-label="Navegação de página exemplo" style="margin-top: 10px;">
+        <ul class="pagination " class="flex-container" style="justify-content: center; align-items: flex-end; align-content: center;">
+            {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}"> &laquo; </a></li>
+            {% endif %}
 
-    <div class="row mb-3 text-center" style="background-color: gainsboro;">
-      <div class="col-sm-4 themed-grid-col">.col-sm-4</div>
-      <div class="col-sm-4 themed-grid-col">.col-sm-4</div>
-      <div class="col-sm-4 themed-grid-col">.col-sm-4</div>
-    </div>
-
-<!-- <div class="container">
-
-  <div class="row">
-    <div class="col-sm-12">
-
-      <h2>{{ object.username }}</h2>
-      {% if object.name %}
-        <p>{{ object.name }}</p>
-      {% endif %}
-    </div>
-  </div>
-
-{% if object == request.user %} -->
-<!-- Action buttons -->
-<!-- <div class="row">
-
-  <div class="col-sm-12">
-    <a class="btn btn-primary" href="{% url 'users:update' %}" role="button">My Info</a>
-    <a class="btn btn-primary" href="{% url 'account_email' %}" role="button">E-Mail</a> -->
-    <!-- Your Stuff: Custom user template urls -->
-  <!-- </div>
-
-</div> -->
-<!-- End Action buttons -->
-<!-- {% endif %} -->
+            <li class="page-item"><a class="page-link" href="">{{ page_obj.number }} - {{ page_obj.paginator.num_pages }}</a></li>
+            
+            {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}"> &raquo; </a></li>
+            {% endif %}
+        </ul>
+    </nav>
 
 </div>
 {% endblock content %}

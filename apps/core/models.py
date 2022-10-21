@@ -1,6 +1,7 @@
 from django.db import models
 from djmoney.models.fields import MoneyField
 from django_cpf_cnpj.fields import CPFField, CNPJField
+from django.contrib.auth import get_user_model
 # Create your models here.
 
 REQUESTS = (
@@ -30,6 +31,11 @@ class Supplier(models.Model):
         blank=True, 
         null=True,
         verbose_name="CNPJ",
+    )
+
+    user = models.ForeignKey(
+        get_user_model(), 
+        on_delete=models.CASCADE,
     )
 
     def __str__(self):
@@ -65,7 +71,7 @@ class Payments(models.Model):
     original_value = MoneyField(
         max_digits=14, 
         decimal_places=2, 
-        default_currency='USD',
+        default_currency='BRL',
         default=00.00,
         blank=True, 
         null=True,
@@ -77,6 +83,11 @@ class Payments(models.Model):
         default=None,
         on_delete=models.CASCADE,
         verbose_name="Fornecedor",
+    )
+
+    user = models.ForeignKey(
+        get_user_model(), 
+        on_delete=models.CASCADE,
     )
 
     def __str__(self):
