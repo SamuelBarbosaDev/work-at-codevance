@@ -24,7 +24,7 @@ class PaymentsListView(ListView):
         return context
 
     def get_queryset(self):
-        return Payments.objects.all().order_by('date_of_issue')
+        return Payments.objects.all().order_by('-date_of_issue').exclude(request_status='Indisponível')
 
 payments_list_view = PaymentsListView.as_view()
 
@@ -44,6 +44,6 @@ class HistoryListView(ListView):
         return context
 
     def get_queryset(self):
-        return Payments.objects.all().order_by('date_of_issue')
+        return Payments.objects.all().order_by('-date_of_issue')
 
 history_list_view = HistoryListView.as_view()

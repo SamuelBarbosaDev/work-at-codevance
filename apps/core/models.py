@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from djmoney.models.fields import MoneyField
 from django_cpf_cnpj.fields import CPFField, CNPJField
@@ -56,10 +57,10 @@ class Payments(models.Model):
         verbose_name="Status da Solicitação",
     )
 
-    date_of_issue = models.DateField(
+    date_of_issue = models.DateTimeField(
+        auto_now_add=True,
         blank=True, 
         null=True,
-        verbose_name="Data de Emissão",
     )
 
     expiration_date = models.DateField(

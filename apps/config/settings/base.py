@@ -14,6 +14,9 @@ READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
 if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
     env.read_env(str(ROOT_DIR / ".env"))
+    print('='*100)
+    print(ROOT_DIR)
+    print('='*100)
 
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -283,8 +286,8 @@ if USE_TZ:
     # https://docs.celeryq.dev/en/stable/userguide/configuration.html#std:setting-timezone
     CELERY_TIMEZONE = TIME_ZONE
 # https://docs.celeryq.dev/en/stable/userguide/configuration.html#std:setting-broker_url
-CELERY_BROKER_URL="redis://127.0.0.1:6379"
-# CELERY_BROKER_URL = env("CELERY_BROKER_URL")
+# CELERY_BROKER_URL="redis://127.0.0.1:6379"
+CELERY_BROKER_URL = env("CELERY_BROKER_URL", default="redis://127.0.0.1:6379")
 # https://docs.celeryq.dev/en/stable/userguide/configuration.html#std:setting-result_backend
 CELERY_RESULT_BACKEND = CELERY_BROKER_URL
 # https://docs.celeryq.dev/en/stable/userguide/configuration.html#std:setting-accept_content
