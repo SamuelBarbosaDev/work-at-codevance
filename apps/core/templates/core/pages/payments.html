@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}User: {{ object.username }}{% endblock %}
+{% block title %}Payments {{ object.username }}{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -47,10 +47,11 @@
                     <p class="col-md-8 fs-4">Expiration Date: <b>{{payment.expiration_date}}</b></p>
                     <p class="col-md-8 fs-4">Request Status : <b>{{payment.request_status}}</b></p>
                     <p class="col-md-8 fs-4">Original value: <b>{{payment.original_value}}</b></p>
-                    <form method="post" action="{{payment.request_status}}">
+                    <!-- <form method="get" action="">
                         {% csrf_token %}
                     <button class="btn btn-primary btn-lg" type="submit" >Solicita</button>
-                    </form>
+                    </form> -->
+                    <a class="btn btn-primary btn-lg" href="request/{{payment.id}}">Solicita</a>
                     </div>
                 </div>
             {% endif %}
