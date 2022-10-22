@@ -47,7 +47,10 @@
                     <p class="col-md-8 fs-4">Expiration Date: <b>{{payment.expiration_date}}</b></p>
                     <p class="col-md-8 fs-4">Request Status : <b>{{payment.request_status}}</b></p>
                     <p class="col-md-8 fs-4">Original value: <b>{{payment.original_value}}</b></p>
-                    <button class="btn btn-primary btn-lg" type="button">Solicita</button>
+                    <form method="post" action="{{payment.request_status}}">
+                        {% csrf_token %}
+                    <button class="btn btn-primary btn-lg" type="submit" >Solicita</button>
+                    </form>
                     </div>
                 </div>
             {% endif %}
@@ -71,32 +74,5 @@
     </nav>
 
 </div>
-
-<!-- <div class="container">
-
-  <div class="row">
-    <div class="col-sm-12">
-
-      <h2>{{ object.username }}</h2>
-      {% if object.name %}
-        <p>{{ object.name }}</p>
-      {% endif %}
-    </div>
-  </div>
-
-{% if object == request.user %} -->
-<!-- Action buttons -->
-<!-- <div class="row">
-
-  <div class="col-sm-12">
-    <a class="btn btn-primary" href="{% url 'users:update' %}" role="button">My Info</a>
-    <a class="btn btn-primary" href="{% url 'account_email' %}" role="button">E-Mail</a> -->
-    <!-- Your Stuff: Custom user template urls -->
-  <!-- </div>
-
-</div> -->
-<!-- End Action buttons -->
-<!-- {% endif %} -->
-
 </div>
 {% endblock content %}
