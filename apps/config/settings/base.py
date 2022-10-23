@@ -2,26 +2,25 @@
 Base settings to build other settings files upon.
 """
 from pathlib import Path
-
 import environ
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # apps/
 APPS_DIR = ROOT_DIR / "apps"
 env = environ.Env()
+env.read_env(str(ROOT_DIR / ".envs/.env"))
 
 READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
 if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
-    env.read_env(str(ROOT_DIR / ".env"))
-    print('='*100)
-    print(ROOT_DIR)
-    print('='*100)
+    env.read_env(str(ROOT_DIR / ".envs/.env"))
 
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = env.bool("DJANGO_DEBUG", False)
+
 # Local time zone. Choices are
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # though not all of them may be available with every OS.
@@ -44,21 +43,15 @@ LOCALE_PATHS = [str(ROOT_DIR / "locale")]
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-# DATABASES = {
-#     "default": env.db(
-#         "DATABASE_URL",
-#         default="postgres:///apps",
-#     ),
-# }
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'db',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'ENGINE': env("POSTGRES_ENGINE",default="django.db.backends.postgresql_psycopg2",),
+        'NAME': env("POSTGRES_NAME"),
+        'USER': env("POSTGRES_USER"),
+        'PASSWORD': env("POSTGRES_PASSWORD"),
+        'HOST': env("POSTGRES_HOST"),
+        'PORT': env("POSTGRES_PORT"),
     }
 }
 
@@ -240,12 +233,17 @@ X_FRAME_OPTIONS = "DENY"
 # EMAIL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-EMAIL_BACKEND = env(
-    "DJANGO_EMAIL_BACKEND",
-    default="django.core.mail.backends.smtp.EmailBackend",
-)
-# https://docs.djangoproject.com/en/dev/ref/settings/#email-timeout
-EMAIL_TIMEOUT = 5
+
+EMAIL_BACKEND = env("EMAIL_BACKEND")
+EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_PORT = env("EMAIL_PORT")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
+EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS")
+EMAIL_TIMEOUT = None 
+# # https://docs.djangoproject.com/en/dev/ref/settings/#email-timeout
+
 
 # ADMIN
 # ------------------------------------------------------------------------------
@@ -290,7 +288,7 @@ LOGGING = {
     },
     "handlers": {
         "file": {
-            "level": "WARNING",
+            "level": "DEBUG",
             "class": "logging.FileHandler", 
             "filename":str(ROOT_DIR / "logs/logs.log"),
             "formatter": "simpleRe",

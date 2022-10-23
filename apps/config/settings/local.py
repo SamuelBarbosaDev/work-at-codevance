@@ -26,9 +26,20 @@ CACHES = {
 # EMAIL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-EMAIL_BACKEND = env(
-    "DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend"
-)
+# EMAIL_BACKEND = env(
+#     "DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend"
+# )
+
+EMAIL_BACKEND = env("EMAIL_BACKEND")
+EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_PORT = env("EMAIL_PORT")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
+EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS")
+EMAIL_TIMEOUT = None 
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#email-timeout
 
 # WhiteNoise
 # ------------------------------------------------------------------------------
