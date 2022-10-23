@@ -20,15 +20,17 @@ class RequestStatusRedirectView(RedirectView):
         if id:
             try:
                 payment_model = Payments.objects.filter(id=id)[0]
-                request_model = Request.objects.filter(payments=payment_model)[0]
-
-            except IndexError:
                 request_create = Request.objects.create(
                     payments=payment_model,
                     requests='Solicitado',
+                    date_of_issue=datetime.datetime.today(),
+                    user=self.request.user,
                 )
                 payment_status = Payments.objects.filter(id=id).update(request_status='Aguardando confirmação')
                 logger.warning("Request made, and status changed from available to Waiting for confirmation")
+
+            except IndexError:
+                logger.warning("Não foi possível realizar a solicitação.")
 
         return reverse("home", kwargs={})
 
@@ -40,11 +42,18 @@ class RequestApprovedRedirectView(RedirectView):
     permanent = False
 
     def get_redirect_url(self, id, sp):
-        request_model = Request.objects.filter(id=id).update(requests=sp)
         if sp == 'Aprovado':
+            request_model = Request.objects.filter(id=id).update(requests=sp)
+            request = Request.objects.filter(id=id).first()
+            Payments.objects.filter(id=request.payments.id).update(request_status='Antecipado')
+
             logger.warning(f"Request to change the status of models request, id:{id}, request:{sp}, has been approved.")
 
         elif sp == 'Negado':
+            request_model = Request.objects.filter(id=id).update(requests=sp)
+            request = Request.objects.filter(id=id).first()
+            Payments.objects.filter(id=request.payments.id).update(request_status='Negado')
+
             logger.warning(f"Request to change the status of models request, id:{id}, request:{sp}, was Denied.")
 
         else:
@@ -112,10 +121,6 @@ class PaymentsListView(ListView):
                     logger.warning("Status changed from 'Awaiting confirmation' to 'Unavailable'.")
                     logger.warning("Deleting Anticipation Request")
 
-        # ===============Checks if the expiration date has been reached===============
-        for payments_model_waiting_confirmation in paymens_waiting_confirmation:
-            request_model = Request.objects.filter(payments=payments_model_waiting_confirmation)
-            print(request_model)
         return context
 
     def get_queryset(self):
