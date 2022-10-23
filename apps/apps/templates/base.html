@@ -52,11 +52,15 @@
               {% if request.user.is_authenticated %}
                 <li class="nav-item">
                   {# URL provided by django-allauth/account/urls.py #}
-                  <a class="nav-link" href="/historico/history/">{% translate "History" %}</a>
+                  <a class="nav-link" href="/core/history/">{% translate "History" %}</a>
                 </li>
                 <li class="nav-item">
                   {# URL provided by django-allauth/account/urls.py #}
-                  <a class="nav-link" href="/historico/payments/">{% translate "Payments" %}</a>
+                  <a class="nav-link" href="/core/payments/">{% translate "Payments" %}</a>
+                </li>
+                <li class="nav-item">
+                  {# URL provided by django-allauth/account/urls.py #}
+                  <a class="nav-link" href="/core/requests/">{% translate "Requests" %}</a>
                 </li>
                 <li class="nav-item">
                   {# URL provided by django-allauth/account/urls.py #}

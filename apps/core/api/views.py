@@ -24,3 +24,6 @@ class PaymentsViewSet(ModelViewSet):
 class RequestViewSet(ModelViewSet):
     queryset = Request.objects.all()
     serializer_class = RequestSerializer
+
+    def get_queryset(self):
+        return Request.objects.filter(user=self.request.user.id).order_by('-date_of_issue')

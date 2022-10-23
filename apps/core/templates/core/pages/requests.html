@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Requests {{ object.username }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Requests</h1>
+
+    <div class="container" style="min-height: 700px;">
+        {% for request in requests%}
+        
+            {% if request.requests == "Aprovado"%}
+                <div class="p-5 mb-4 bg-light rounded-3" style="background-color: gainsboro;">
+                    <div class="container-fluid py-5">
+                    <h1 class="display-5 fw-bold">ID: {{request.id}}</h1>
+                    <p class="col-md-8 fs-4">Request Status : <b>{{request.requests}}</b></p>
+                    <p class="col-md-8 fs-4">Request Status : <b>{{request.date_of_issue}}</b></p>
+                    <p class="col-md-8 fs-4" style="color:green;"><b>Antecipado</b></p>
+                    </div>
+                </div>
+            {% elif request.requests == "Negado"%}
+                <div class="p-5 mb-4 bg-light rounded-3" style="background-color: gainsboro;">
+                    <div class="container-fluid py-5">
+                    <h1 class="display-5 fw-bold">ID: {{request.id}}</h1>
+                    <p class="col-md-8 fs-4">Request Status : <b>{{request.requests}}</b></p>
+                    <p class="col-md-8 fs-4">Request Status : <b>{{request.date_of_issue}}</b></p>
+                    <p class="col-md-8 fs-4" style="color:red;"><b>Negado</b></p>
+                    </div>
+                </div>
+            {% elif request.requests == "Solicitado"%}
+                <div class="p-5 mb-4 bg-light rounded-3" style="background-color: gainsboro;">
+                    <div class="container-fluid py-5">
+                    <h1 class="display-5 fw-bold">ID: {{request.id}}</h1>
+                    <p class="col-md-8 fs-4">Request Status : <b>{{request.requests}}</b></p>
+                    <p class="col-md-8 fs-4">Request Status : <b>{{request.date_of_issue}}</b></p>
+                    <a class="btn btn-primary btn-lg" style="background-color: green; border: 0px;" href="{{request.id}}/Aprovado/">Aprovar</a>
+                    <a class="btn btn-primary btn-lg" style="background-color: red; border: 0px;" href="{{request.id}}/Negado/">Negar</a>
+
+                    </div>
+                </div>
+            {% else %}
+                <p>:(</p>
+            {% endif %}
+
+        {% endfor %}
+    </div>
+
+    <!-- ======= PAGINATION ======= -->
+    <nav aria-label="Navegação de página exemplo" style="margin-top: 10px;">
+        <ul class="pagination " class="flex-container" style="justify-content: center; align-items: flex-end; align-content: center;">
+            {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}"> &laquo; </a></li>
+            {% endif %}
+
+            <li class="page-item"><a class="page-link" href="">{{ page_obj.number }} - {{ page_obj.paginator.num_pages }}</a></li>
+            
+            {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}"> &raquo; </a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+</div>
+</div>
+{% endblock content %}

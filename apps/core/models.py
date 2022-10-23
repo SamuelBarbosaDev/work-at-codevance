@@ -113,6 +113,17 @@ class Request(models.Model):
         verbose_name="Antecipação de Pagamento",
     )
 
+    date_of_issue = models.DateTimeField(
+        auto_now_add=True,
+        blank=True, 
+        null=True,
+    )
+
+    user = models.ForeignKey(
+        get_user_model(), 
+        on_delete=models.CASCADE,
+    )
+
     def __str__(self):
         return self.requests
 
