@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.views.generic import ListView, RedirectView
+from core.tasks import send_feedback_email_task
 from django.core.mail import send_mail
 from django.urls import reverse
 import datetime
@@ -49,15 +50,19 @@ class RequestApprovedRedirectView(RedirectView):
             request = Request.objects.filter(id=id).first()
             Payments.objects.filter(id=request.payments.id).update(request_status='Antecipado')
 
-            send_mail("Pedido de Antecipação de Pagamento.", "Sua solicitação para a antecipação de pagamento foi aprovada.", 'iggsamuelggi@gmail.com', [self.request.user.email])
-
+            # send_mail("Pedido de Antecipação de Pagamento.", "Enviado pelo send_mail - Sua solicitação para a antecipação de pagamento foi aprovada.", 'iggsamuelggi@gmail.com', [self.request.user.email])
+            
+            send_feedback_email_task.delay(email_address=self.request.user.email, message='Enviado pelo celery - Sua solicitação para a antecipação de pagamento foi aprovada.')
             logger.warning(f"Request to change the status of models request, id:{id}, request:{sp}, has been approved.")
 
         elif sp == 'Negado':
             request_model = Request.objects.filter(id=id).update(requests=sp)
             request = Request.objects.filter(id=id).first()
             Payments.objects.filter(id=request.payments.id).update(request_status='Negado')
-            send_mail("Pedido de Antecipação de Pagamento.", "Sua solicitação para a antecipação de pagamento foi Negada.", 'iggsamuelggi@gmail.com', [self.request.user.email])
+            
+            # send_mail("Pedido de Antecipação de Pagamento.", "Sua solicitação para a antecipação de pagamento foi Negada.", 'iggsamuelggi@gmail.com', [self.request.user.email])
+            send_feedback_email_task.delay(email_address=self.request.user.email, message='Enviado pelo celery - Sua solicitação para a antecipação de pagamento foi Negada.')
+            
             logger.warning(f"Request to change the status of models request, id:{id}, request:{sp}, was Denied.")
 
         else:
