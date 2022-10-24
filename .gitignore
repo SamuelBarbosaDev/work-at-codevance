@@ -102,7 +102,3 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-
-# outro
-3543543.txt
-Procfile
