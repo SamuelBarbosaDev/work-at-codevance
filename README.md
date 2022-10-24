@@ -76,6 +76,16 @@ python manage.py runserver
 sudo apt install heroku
 ```
 
+- Faça o login:
+```
+heroku login
+```
+
+- Crie um app:
+```
+heroku create work-at-codevance-samuel
+```
+
 ## URLS:
 
 - Home:
