@@ -15,10 +15,6 @@ from core.models import (
 logger = logging.getLogger('django')
 
 
-def envia_email(request):
-    send_mail("Teste de Envio de Email.", "Mensagem do meu email, Deu Certo. :) ;) :0 clup clup...", 'iggsamuelggi@gmail.com', ['samueloficial@protonmail.com'])
-    return HttpResponse('Enviando E-mail - Para o Samuel.')
-
 class RequestStatusRedirectView(RedirectView):
     permanent = False
 
@@ -53,7 +49,7 @@ class RequestApprovedRedirectView(RedirectView):
             request = Request.objects.filter(id=id).first()
             Payments.objects.filter(id=request.payments.id).update(request_status='Antecipado')
 
-            send_mail("Pedido de Antecipação de Pagamento.", "Sua solicitação para a antecipação de pagamento foi aprovada.", 'iggsamuelggi@gmail.com', ['samueloficial@protonmail.com'])
+            send_mail("Pedido de Antecipação de Pagamento.", "Sua solicitação para a antecipação de pagamento foi aprovada.", 'iggsamuelggi@gmail.com', [self.request.user.email])
 
             logger.warning(f"Request to change the status of models request, id:{id}, request:{sp}, has been approved.")
 
@@ -61,8 +57,7 @@ class RequestApprovedRedirectView(RedirectView):
             request_model = Request.objects.filter(id=id).update(requests=sp)
             request = Request.objects.filter(id=id).first()
             Payments.objects.filter(id=request.payments.id).update(request_status='Negado')
-
-            send_mail("Pedido de Antecipação de Pagamento.", "Sua solicitação para a antecipação de pagamento foi Negada.", 'iggsamuelggi@gmail.com', ['samueloficial@protonmail.com'])
+            send_mail("Pedido de Antecipação de Pagamento.", "Sua solicitação para a antecipação de pagamento foi Negada.", 'iggsamuelggi@gmail.com', [self.request.user.email])
             logger.warning(f"Request to change the status of models request, id:{id}, request:{sp}, was Denied.")
 
         else:
