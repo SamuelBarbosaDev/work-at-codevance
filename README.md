@@ -70,6 +70,12 @@ python manage.py migrate
 python manage.py runserver
 ```
 
+## Deploy:
+- instalando a lib:
+```
+sudo apt install heroku
+```
+
 ## URLS:
 
 - Home:
