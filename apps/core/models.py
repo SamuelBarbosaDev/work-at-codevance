@@ -95,6 +95,8 @@ class Payments(models.Model):
         expiration_date = str(self.expiration_date)
         return expiration_date
 
+    class Meta:
+        verbose_name_plural = 'Payments'
 
 class Request(models.Model):
     payments = models.ForeignKey(
